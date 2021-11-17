@@ -18,8 +18,7 @@ dependencyResolutionManagement {
             url = uri("https://maven.pkg.github.com/steuerbot/android-sdk")
             credentials {
                 username = "friedolinfoerder"
-                // Safe to share the password since it is a `read:package` scoped token.
-                password = "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"
+                password = "your_access_token"
             }
         }
         // add these next two lines for subdependencies
@@ -29,6 +28,8 @@ dependencyResolutionManagement {
 }
 ...
 ```
+
+Replace `your_access_token` with a valid access token. Get in touch with us to obtain a token.
 
 ### 2) Add steuerbot to your dependencies
 
