@@ -62,7 +62,7 @@ class OnboardingActivity : FragmentActivity() {
             .addOnSuccessListener { sessionId ->
                 val config = Bundle();
                 config.putString("theme",
-                    "{\"name\":\"Vivid\",\"font\":\"Inter-Bold\",\"colors\":{\"primary100\":\"#4e00c7\",\"primary90\":\"#7222f5\",\"primary80\":\"#7D33F6\",\"primary60\":\"#9259f5\",\"primary40\":\"#ab85f5\",\"primary20\":\"#d9cafc\"}}"
+                    "{\"name\":\"CustomTheme\",\"font\":\"Inter-Bold\",\"colors\":{\"primary100\":\"#4e00c7\",\"primary90\":\"#7222f5\",\"primary80\":\"#7D33F6\",\"primary60\":\"#9259f5\",\"primary40\":\"#ab85f5\",\"primary20\":\"#d9cafc\"}}"
                 )
                 startActivity(
                     Intent()
