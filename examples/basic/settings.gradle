@@ -1,0 +1,23 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url "https://jitpack.io" }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/steuerbot/android-sdk")
+            credentials {
+                username = "friedolinfoerder"
+                // Safe to share the password since it is a `read:package` scoped token.
+                password = "ghp_" + "aWbyRnfk5Vca2cNgXeQWAUsT0Cke2r1q6ZF7"
+            }
+        }
+    }
+}
+rootProject.name = "External Partner"
+include ':app'
+include ':steuerbot'
