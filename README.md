@@ -18,7 +18,8 @@ dependencyResolutionManagement {
             url = uri("https://maven.pkg.github.com/steuerbot/android-sdk")
             credentials {
                 username = "friedolinfoerder"
-                password = "your_access_token"
+                // Safe to share the password since it is a `read:package` scoped token.
+                password = "ghp_" + "aWbyRnfk5Vca2cNgXeQWAUsT0Cke2r1q6ZF7"
             }
         }
         // add these next two lines for subdependencies
@@ -28,8 +29,6 @@ dependencyResolutionManagement {
 }
 ...
 ```
-
-Replace `your_access_token` with a valid access token. Get in touch with us to obtain a token.
 
 ### 2) Add steuerbot to your dependencies
 
@@ -127,3 +126,10 @@ splitInstallManager
         )
     }
 ```
+
+You have to provide the following default values:
+* `DeviceCredentialHandlerTheme` in `res/values/themes.xml`
+* `google_play_services_version` in `res/values/steuerbot.xml`
+* Xml-Files in folder `res/xml` for `file_provider_paths`, `file_viewer_provider_paths`, `provider_paths`, `share_download_paths`
+
+You can have a look in the examples folder and copy the values from there.
