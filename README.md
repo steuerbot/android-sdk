@@ -90,31 +90,31 @@ import com.steuerbot.sdk.Address
         Steuerbot()
             // required
             .setPartnerId("your-partner-id")
-            .setToken("your-user-token")
+            .setToken("user-token")
             .setUser(
                 User("user@email.com", "Max")
                     // optional
                     .setSurname("Power")
-                    .setTaxId("user-tax-id")
-                    .setIban("user-iban")
-                    .setBirthday("YYYY-MM-DD")
+                    .setTaxId("user-tax-id") // a 11-digit number
+                    .setIban("user-iban") // format must follow ISO 13616:2020 standard
+                    .setBirthday("YYYY-MM-DD") // format has to be YYYY-MM-DD
                     .setGender(Gender.MALE)
-                    .setPhoneNumber("user-phone-number")
+                    .setPhoneNumber("+49 849284727563") // ITU E.123 standard, has to start with area code, e.g. +49 for germany
                     .setAddress(
                         Address()
                             // required
-                            .setStreet("user-street")
-                            .setNumber("user-street-number")
-                            .setZip("user-zip")
-                            .setCity("user-city")
-                            .setState("user-state")
-                            .setCountry("user-country")
-                            .setCountryLong("user-country-long")
+                            .setStreet("Welfenstraße")
+                            .setNumber("19")
+                            .setZip("70736")
+                            .setCity("Fellbach")
+                            .setState("BW") // short-form of state, for example BW, BY, NRW, ...
+                            .setCountry("DE") // Country code, "DE" for Germany
+                            .setCountryLong("Deutschland") 
                             .setLatitude(48.823538643594055)
                             .setLongitude(9.273727307951013)
                             // optional
-                            .setNumberAddition("A")
-                            .setSupplement("b")
+                            .setNumberAddition("a") // for example "a", "/1", "-2"
+                            .setSupplement("apartment") // for example apartment, building, floor
                     )
             )
             // optional
