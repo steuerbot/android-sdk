@@ -127,17 +127,17 @@ import com.steuerbot.sdk.Address
     ...
 ```
 
-### Partner-ID
+#### Partner-ID
 
 Here you have to use your unique partner id, which you have received from us.
 
 You don't have a partner id now. No problem, get in touch with us: Write a mail to marc@steuerbot.com.
 
-### Actions
+#### Actions
 
 The following actions could be set via `.setAction()`:
 
-#### TaxYearAction
+##### TaxYearAction
 
 Jump to a tax year:
 
@@ -145,7 +145,7 @@ Jump to a tax year:
 .setAction(TaxYearAction(2021))
 ```
 
-#### SupportAction
+##### SupportAction
 
 Jump to support screen:
 
@@ -153,7 +153,7 @@ Jump to support screen:
 .setAction(SupportAction())
 ```
 
-#### VastAction
+##### VastAction
 
 Jump to screen with prefilled tax declaration feature:
 
@@ -170,7 +170,7 @@ Steuerbot.triggerAction(SupportAction())
 Steuerbot.triggerDeeplink("/support")
 ```
 
-### Theming
+#### Theming
 
 You can set your own custom themes! Only a light one, a dark one or both.
 The following functions expect **JSON** strings.
