@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.steuerbot.sdk.Language
 import com.steuerbot.sdk.Steuerbot
 import com.steuerbot.sdk.User
-import com.steuerbot.sdk.action.TaxYearAction
 
 class OnboardingActivity : FragmentActivity() {
 
