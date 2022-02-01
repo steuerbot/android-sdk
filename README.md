@@ -44,7 +44,7 @@ In your main project `build.gradle` at the steuerbot dependency. For example in 
 ```groovy
 dependencies {
     ...
-    implementation 'com.steuerbot.sdk:sdk:0.0.3-SNAPSHOT'
+    implementation 'com.steuerbot.sdk:sdk:0.0.4-SNAPSHOT'
     ...
 }
 ```
@@ -72,7 +72,7 @@ android {
 }
 ```
 
-### 4) Start the steuerbot activity
+### 4) Starting Steuerbot
 
 Start the steuerbot activity in your app when you wan't your users to switch to steuerbot tax integration.
 For example in a click handler in an activity `MainActivity.kt` it can look like this:
@@ -117,6 +117,7 @@ import com.steuerbot.sdk.Address
                             .setSupplement("apartment") // for example apartment, building, floor
                     )
             )
+            .setPaymentLink("yourApp://payment") // set your payment link, used during payment process
             // optional
             .setApiUrl("https://api.test2.steuerbot.com") // default: https://api.test2.steuerbot.com
             .setLanguage(Language.EN) // default: Language.DE
@@ -136,6 +137,17 @@ Here you have to use your unique partner id, which you have received from us.
 
 You don't have a partner id now. No problem, get in touch with us: Write a mail to marc@steuerbot.com.
 
+#### Payment
+
+You have to set the payment deeplink used during payment process:
+
+```kotlin
+.setPaymentLink("your-link")
+```
+
+The SDK will call that link in order to determine the price for your customer.
+The parameters `purpose`, `iban` and `refund` will be added.
+
 #### Actions
 
 The following actions could be set via `.setAction()`:
@@ -146,6 +158,14 @@ Jump to a tax year:
 
 ```kotlin
 .setAction(TaxYearAction(2021))
+```
+
+##### PaymentSuccessAction
+
+Complete the payment process:
+
+```kotlin
+.setAction(PaymentSuccessAction(999, "submit-id", "offer-id", "bot-id"))
 ```
 
 ##### SupportAction
@@ -318,7 +338,38 @@ This is the specification of a theme. All fields are optional. Customize as you 
 }
 ```
 
-## Advanced: Load Android SDK as dynamic module
+See [/examples/basic](/examples/basic) for a full working example using the basic solution.
+
+## Other integrations 
+
+### Inheritance
+
+You can also inherit from `SteuerbotActivity` if you want to add custom code/logic to the activity class:
+
+```kotlin
+class TaxActivity : SteuerbotActivity() {
+}
+```
+
+Now you can configure Steuerbot like above and start it like this:
+
+```kotlin
+.start(this, TaxActivity::class.java)
+```
+
+See [/examples/inheritance](/examples/inheritance) for a full working example using the inheritance solution.
+
+### Fragment
+
+You can also create a Fragment and use it. Configure Steuerbot and call this function.
+
+```kotlin
+.buildFragment()
+```
+
+See [/examples/fragment](/examples/fragment) for a full working example using the fragment solution.
+
+### Dynamic module
 
 Create a feature module with the upper instructions based on this [https://developer.android.com/guide/playcore/feature-delivery](documentation). 
 
@@ -367,3 +418,7 @@ You have to provide the following default values:
 * `google_play_services_version` in `res/values/steuerbot.xml`
 
 You can have a look in the [examples values folder](/examples/dynamic/app/src/main/res/values) and copy the values from there.
+
+See [/examples/dynamic](/examples/dynamic) for a full working example using the dynamic module solution.
+
+Of course the different integration solutions could be mixed, e.g. you could use a fragment after loading the dynamic module.
