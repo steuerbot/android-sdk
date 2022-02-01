@@ -117,6 +117,7 @@ import com.steuerbot.sdk.Address
                             .setSupplement("apartment") // for example apartment, building, floor
                     )
             )
+            .setPaymentLink("yourApp://payment") // set your payment link, used during payment process
             // optional
             .setApiUrl("https://api.test2.steuerbot.com") // default: https://api.test2.steuerbot.com
             .setLanguage(Language.EN) // default: Language.DE
@@ -136,6 +137,17 @@ Here you have to use your unique partner id, which you have received from us.
 
 You don't have a partner id now. No problem, get in touch with us: Write a mail to marc@steuerbot.com.
 
+#### Payment
+
+You have to set the payment deeplink used during payment process:
+
+```kotlin
+.setPaymentLink("your-link")
+```
+
+The SDK will call that link in order to determine the price for your customer.
+The parameters `purpose`, `iban` and `refund` will be added.
+
 #### Actions
 
 The following actions could be set via `.setAction()`:
@@ -146,6 +158,14 @@ Jump to a tax year:
 
 ```kotlin
 .setAction(TaxYearAction(2021))
+```
+
+##### PaymentSuccessAction
+
+Complete the payment process:
+
+```kotlin
+.setAction(PaymentSuccessAction(999, "submit-id", "offer-id", "bot-id"))
 ```
 
 ##### SupportAction
