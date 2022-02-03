@@ -146,7 +146,7 @@ You have to set the payment deeplink used during payment process:
 ```
 
 The SDK will call that link in order to determine the price for your customer.
-The parameters `purpose`, `iban` and `refund` will be added.
+The parameters `purpose`, `iban`, `refund` (in cent), `offerId`, `submitId` and `botId` will be added.
 
 #### Actions
 
@@ -167,6 +167,14 @@ Complete the payment process:
 ```kotlin
 .setAction(PaymentSuccessAction(999, "submit-id", "offer-id", "bot-id"))
 ```
+Arguments:
+
+|Position| Description                                                                  |
+|---|------------------------------------------------------------------------------|
+|0| Price in cent                                                                |
+|1| Submit-ID, included in the query parameters of payment deeplink (`submitId`) |
+|2| Offer-ID, included in the query parameters of payment deeplink (`offerId`)   |
+|3| Bot-ID, included in the query parameters of payment deeplink (`botId`)       |
 
 ##### SupportAction
 
