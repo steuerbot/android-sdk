@@ -64,7 +64,8 @@ class OnboardingActivity : FragmentActivity() {
             // the section about how to Monitor the request state.
             .addOnSuccessListener { sessionId ->
                 Steuerbot()
-                    .setPartnerId("vivid")
+                    .setPartnerId("your-app")
+                    .setPartnerName("YourApp")
                     .setToken("your-user-token")
                     .setUser(User("sdk01@byom.de", "Max").setSurname("Power"))
                     .setLanguage("en")
