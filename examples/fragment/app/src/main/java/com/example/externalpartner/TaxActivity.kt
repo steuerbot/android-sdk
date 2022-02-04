@@ -20,7 +20,8 @@ class TaxActivity : AppCompatActivity(), SteuerbotHardwareBackBtnHandler {
         setContentView(binding.root)
 
         val fragment: Fragment = Steuerbot()
-            .setPartnerId("vivid")
+            .setPartnerId("your-app")
+            .setPartnerName("YourApp")
             .setToken("your-user-token")
             .setApiUrl("https://api.test2.steuerbot.com")
             .setUser(User("sdk01@byom.de", "Max").setSurname("Power"))

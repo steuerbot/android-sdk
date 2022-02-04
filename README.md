@@ -44,7 +44,7 @@ In your main project `build.gradle` at the steuerbot dependency. For example in 
 ```groovy
 dependencies {
     ...
-    implementation 'com.steuerbot.sdk:sdk:0.0.4-SNAPSHOT'
+    implementation 'com.steuerbot.sdk:sdk:1.0.0-rc.1'
     ...
 }
 ```
@@ -90,6 +90,7 @@ import com.steuerbot.sdk.Address
         Steuerbot()
             // required
             .setPartnerId("your-partner-id")
+            .setPartnerName("YourPartnerName")
             .setToken("user-token")
             .setUser(
                 User("user@email.com", "Max")
@@ -110,9 +111,9 @@ import com.steuerbot.sdk.Address
                             .setState("BW") // short-form of state, for example BW, BY, NRW, ...
                             .setCountry("DE") // Country code, "DE" for Germany
                             .setCountryLong("Deutschland") 
+                            // optional
                             .setLatitude(48.823538643594055)
                             .setLongitude(9.273727307951013)
-                            // optional
                             .setNumberAddition("a") // for example "a", "/1", "-2"
                             .setSupplement("apartment") // for example apartment, building, floor
                     )
@@ -136,6 +137,10 @@ import com.steuerbot.sdk.Address
 Here you have to use your unique partner id, which you have received from us.
 
 You don't have a partner id now. No problem, get in touch with us: Write a mail to marc@steuerbot.com.
+
+#### Partner-Name
+
+Set the name, which will be displayed in our integration.
 
 #### Payment
 
