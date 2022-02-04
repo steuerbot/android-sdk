@@ -111,9 +111,9 @@ import com.steuerbot.sdk.Address
                             .setState("BW") // short-form of state, for example BW, BY, NRW, ...
                             .setCountry("DE") // Country code, "DE" for Germany
                             .setCountryLong("Deutschland") 
+                            // optional
                             .setLatitude(48.823538643594055)
                             .setLongitude(9.273727307951013)
-                            // optional
                             .setNumberAddition("a") // for example "a", "/1", "-2"
                             .setSupplement("apartment") // for example apartment, building, floor
                     )
