@@ -44,7 +44,7 @@ In your main project `build.gradle` at the steuerbot dependency. For example in 
 ```groovy
 dependencies {
     ...
-    implementation 'com.steuerbot.sdk:sdk:1.0.0-rc.1'
+    implementation 'com.steuerbot.sdk:sdk:1.0.0-rc.2'
     ...
 }
 ```
