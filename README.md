@@ -44,7 +44,7 @@ In your main project `build.gradle` at the steuerbot dependency. For example in 
 ```groovy
 dependencies {
     ...
-    implementation 'com.steuerbot.sdk:sdk:1.0.0'
+    implementation 'com.steuerbot.sdk:sdk:1.0.1'
     ...
 }
 ```
@@ -302,3 +302,7 @@ You can have a look in the [examples values folder](/examples/dynamic/app/src/ma
 See [/examples/dynamic](/examples/dynamic) for a full working example using the dynamic module solution.
 
 Of course the different integration solutions could be mixed, e.g. you could use a fragment after loading the dynamic module.
+
+## License
+
+The contents of this repository are licensed under the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
