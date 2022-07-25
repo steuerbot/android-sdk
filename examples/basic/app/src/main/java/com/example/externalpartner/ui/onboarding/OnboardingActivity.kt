@@ -1,20 +1,14 @@
 package com.example.externalpartner.ui.onboarding
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.externalpartner.R
 import com.example.externalpartner.databinding.ActivityOnboardingBinding
-import com.google.android.material.tabs.TabLayoutMediator
 import com.steuerbot.sdk.Language
 import com.steuerbot.sdk.Steuerbot
 import com.steuerbot.sdk.User
+import java.math.BigInteger
+import java.security.MessageDigest
 
 class OnboardingActivity : FragmentActivity() {
 
@@ -25,71 +19,41 @@ class OnboardingActivity : FragmentActivity() {
 
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
 
-        val demoCollectionAdapter = OnboardingAdapter(this)
-        val viewPager = binding.viewPager
-        viewPager.adapter = demoCollectionAdapter
-
-        TabLayoutMediator(binding.tabLayout, binding.viewPager)
-        { tab, position -> }.attach()
-
         binding.cta.setOnClickListener { openReactApp(it) }
 
         setContentView(binding.root)
+    }
+
+    private fun getSHA512(input:String):String{
+        val md: MessageDigest = MessageDigest.getInstance("SHA-512")
+        val messageDigest = md.digest(input.toByteArray())
+
+        // Convert byte array into signum representation
+        val no = BigInteger(1, messageDigest)
+
+        // Convert message digest into hex value
+        var hashtext: String = no.toString(16)
+
+        // Add preceding 0s to make it 128 chars long
+        while (hashtext.length < 128) {
+            hashtext = "0$hashtext"
+        }
+
+        // return the HashText
+        return hashtext
     }
 
     fun openReactApp(view: View) {
         Steuerbot()
             .setPartnerId("sdktest")
             .setPartnerName("YourApp")
-            .setToken("your-user-token")
+            .setToken(getSHA512(binding.editTextTextPassword.text.toString()))
             .setApiUrl("https://api.test2.steuerbot.com")
-            .setUser(User("sdk01@byom.de", "Max").setSurname("Power"))
+            .setUser(User(binding.editTextTextEmailAddress.text.toString(), binding.editTextTextPersonName.text.toString()).setSurname(binding.editTextTextPersonName2.text.toString()))
             .setPaymentLink("externalpartner://payment")
             .setLanguage(Language.EN)
             .activateDebugMode()
             .start(this)
     }
 
-}
-
-data class OnboardingScreen(val title: String, val subTitle: String, val imageRes: Int)
-
-class OnboardingAdapter(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
-    companion object {
-        val screens = arrayOf(
-            OnboardingScreen(
-                "Your Tax Declaration!",
-                "Start now and get 1.051 € on average",
-                R.drawable.intro_2
-            ), OnboardingScreen(
-                "It's easy and fast!",
-                "Finish your taxes in 20 minutes",
-                R.drawable.intro_3
-            )
-        )
-    }
-
-    override fun getItemCount(): Int = screens.size
-    override fun createFragment(position: Int): Fragment {
-        val fragment = OnboardingFragment(screens.get(position))
-        fragment.arguments = Bundle().apply {}
-        return fragment
-    }
-}
-
-class OnboardingFragment(val screen: OnboardingScreen) : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val root = inflater.inflate(R.layout.fragment_onboarding, container, false)
-        root.findViewById<ImageView>(R.id.imageView).setImageResource(screen.imageRes)
-        root.findViewById<TextView>(R.id.title).text = screen.title
-        root.findViewById<TextView>(R.id.subtitle).text = screen.subTitle
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    }
 }
