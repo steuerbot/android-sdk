@@ -20,7 +20,7 @@ class PaymentActivity : AppCompatActivity() {
         val data: Uri = intent!!.data!!
         val offerId = data.getQueryParameter("offerId")
         val submitId = data.getQueryParameter("submitId")
-        val botId = data.getQueryParameter("submitId")
+        val botId = data.getQueryParameter("botId")
 
         binding.pay.setOnClickListener {
             Steuerbot.triggerAction(PaymentSuccessAction(3999, submitId, offerId, botId))
