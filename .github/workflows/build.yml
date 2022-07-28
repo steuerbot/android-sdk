@@ -17,10 +17,10 @@ jobs:
         run: cd examples/basic; ./gradlew assembleRelease
 
       - name: Copy App Artifact
-        run: cp examples/basic/app/build/outputs/apk/release/app-release.apk app-$GITHUB_REF_NAME.apk
+        run: cp examples/basic/app/build/outputs/apk/release/app-release.apk app-${{ github.ref_name }}.apk
 
       - name: Upload App Artifact
         uses: actions/upload-artifact@v3
         with:
           name: apk
-          path: app-$GITHUB_REF_NAME.apk
+          path: app-${{ github.ref_name }}.apk
