@@ -1,0 +1,26 @@
+name: Build Example App
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Example Android App
+        run: cd examples/basic; ./gradlew assembleRelease
+
+      - name: Upload App Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: apk
+          path: examples/basic/app/build/outputs/apk/release/app-release.apk
