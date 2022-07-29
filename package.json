@@ -13,6 +13,6 @@
   },
   "scripts": {
     "change-version": "node sdk.mjs change-version",
-    "version-push": "yarn sdk change-version push"
+    "version-push": "yarn change-version push"
   }
 }
