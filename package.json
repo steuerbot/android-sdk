@@ -1,6 +1,6 @@
 {
   "name": "android-sdk",
-  "version": "1.0.5",
+  "version": "2.13.0-rc.4",
   "main": "sdk.mjs",
   "repository": "git@github.com:steuerbot/android-sdk.git",
   "author": "friedolin <friedolin@steuerbot.com>",
