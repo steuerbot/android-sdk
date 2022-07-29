@@ -26,4 +26,5 @@ jobs:
       - name: Upload App Artifact
         uses: actions/upload-artifact@v3
         with:
+          name: ${{ steps.package-version.outputs.current-version }}
           path: app-${{ steps.package-version.outputs.current-version }}.apk
