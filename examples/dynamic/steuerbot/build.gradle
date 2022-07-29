@@ -54,5 +54,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-    implementation 'com.steuerbot.sdk:sdk:1.0.5'
+    implementation 'com.steuerbot.sdk:sdk:v2.13.0-rc.3'
 }

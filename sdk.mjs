@@ -27,7 +27,7 @@ yargs(hideBin(process.argv))
       [
         'README.md',
         'examples/basic/app/build.gradle',
-        'examples/dynamic/app/build.gradle',
+        'examples/dynamic/steuerbot/build.gradle',
         'examples/fragment/app/build.gradle',
         'examples/inheritance/app/build.gradle',
       ],
