@@ -1,0 +1,16 @@
+{
+  "name": "android-sdk",
+  "version": "1.0.5",
+  "main": "sdk.mjs",
+  "repository": "git@github.com:steuerbot/android-sdk.git",
+  "author": "friedolin <friedolin@steuerbot.com>",
+  "license": "Apache License, version 2.0",
+  "devDependencies": {
+    "chalk": "5.0.1",
+    "fs-extra": "10.1.0",
+    "yargs": "17.5.1"
+  },
+  "scripts": {
+    "set-version": "node sdk.mjs set-version"
+  }
+}
