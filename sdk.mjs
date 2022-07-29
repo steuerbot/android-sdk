@@ -5,8 +5,15 @@ import fs, {outputFile} from "fs-extra";
 import {dirname} from 'path';
 import {fileURLToPath} from 'url';
 import {exec} from "child_process";
+import inquirer from 'inquirer';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const packageJsonPath = `${__dirname}/package.json`;
+let packageJsonContent = fs.readFileSync(packageJsonPath, 'utf-8');
+const oldVersionName = packageJsonContent.match(
+  /"version": "((\d+\.\d+\.\d+)(-.*)?)"/,
+)[1];
 
 const execAsync = (cmd) => {
   return new Promise((resolve, reject) => {
@@ -36,7 +43,95 @@ const execAsync = (cmd) => {
 }
 
 yargs(hideBin(process.argv))
-  .command('set-version <newVersion> [push]', 'Set the new verison', () => {}, async (argv) => {
+  .command('change-version [push]', 'Set the new version', () => {}, async (argv) => {
+    console.log(chalk.blue(`Current version is ${chalk.bold(oldVersionName)}`));
+
+    let [v1, v2, v3] = oldVersionName
+      .split('-')[0]
+      .split('.')
+      .map((str) => parseInt(str, 10));
+
+    const majorVersion = `${v1 + 1}.0.0`;
+    const minorVersion = `${v1}.${v2 + 1}.0`;
+    const patchVersion = `${v1}.${v2}.${v3 + 1}`;
+    const internalVersion = `${v1}.${v2}.${v3}`;
+
+    const { suffix, suffixVersion, versionName } = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'versionName',
+        message: 'What version do you want to create?',
+        default: 'internal',
+        choices: [
+          {
+            name: `internal (${internalVersion})`,
+            value: internalVersion,
+            short: internalVersion,
+          },
+          {
+            name: `patch    (${patchVersion})`,
+            value: patchVersion,
+            short: patchVersion,
+          },
+          {
+            name: `minor    (${minorVersion})`,
+            value: minorVersion,
+            short: minorVersion,
+          },
+          {
+            name: `major    (${majorVersion})`,
+            value: majorVersion,
+            short: majorVersion,
+          },
+          {
+            name: `custom   (x.x.x)`,
+            value: 'custom',
+            short: 'custom',
+          },
+        ],
+      },
+      {
+        type: 'input',
+        name: 'versionName',
+        when: ({ versionName }) => versionName === 'custom',
+        message: 'What version string do you want to use?',
+        askAnswered: true,
+        validate: (input) =>
+          !!input.match(/^\d+.\d+.\d+$/) ||
+          'The version string must be in format *.*.*',
+      },
+      {
+        type: 'list',
+        name: 'suffix',
+        message: 'What suffix do you want to use?',
+        default: 'none',
+        choices: [
+          'none',
+          {
+            name: 'snapshot',
+            value: 'SNAPSHOT',
+            short: 'snapshot',
+          },
+          'alpha',
+          'beta',
+          'rc',
+        ],
+      },
+      {
+        type: 'number',
+        name: 'suffixVersion',
+        when: ({ suffix }) => suffix === 'rc',
+        message: 'What RC do you want to create?',
+        default: '1',
+        transformer: (input) => `rc.${input}`,
+      },
+    ]);
+
+    let addon =
+      suffix === 'none'
+        ? ''
+        : `-${suffix}${suffixVersion ? `.${suffixVersion}` : ''}`;
+    const newVersion = `${versionName}${addon}`;
     const changeFile = async (files, search, replace) => {
       for (const file of files) {
         const path = `${__dirname}/${file}`;
@@ -49,7 +144,7 @@ yargs(hideBin(process.argv))
         'package.json',
       ],
       /"version": "[^"]*",/,
-      `"version": "${argv.newVersion}",`
+      `"version": "${newVersion}",`
     );
     await changeFile(
       [
@@ -60,23 +155,23 @@ yargs(hideBin(process.argv))
         'examples/inheritance/app/build.gradle',
       ],
       /implementation 'com.steuerbot.sdk:sdk:[^']*'/,
-      `implementation 'com.steuerbot.sdk:sdk:${argv.newVersion}'`
+      `implementation 'com.steuerbot.sdk:sdk:${newVersion}'`
     );
 
     if(argv.push) {
-      const branchName = `v${argv.newVersion}`;
+      const branchName = `v${newVersion}`;
       await execAsync(`git fetch`);
       await execAsync(`git pull`);
       await execAsync(`git checkout -b ${branchName}`);
       await execAsync('git add -A');
       try {
-        await execAsync(`git commit -m "Create release ${argv.newVersion}"`);
+        await execAsync(`git commit -m "Create release ${newVersion}"`);
       } catch(e) {
         // no changes detected
       }
       await execAsync(`git push origin ${branchName}`);
     }
 
-    console.log(chalk.green(`✓ Set version to ${argv.newVersion}`));
+    console.log(chalk.green(`✓ Set version to ${newVersion}`));
   })
   .parse();
