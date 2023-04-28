@@ -26,7 +26,7 @@ dependencyResolutionManagement {
             credentials {
                 username = "friedolinfoerder"
                 // Safe to share the password since it is a `read:package` scoped token.
-                password = "ghp_" + "aWbyRnfk5Vca2cNgXeQWAUsT0Cke2r1q6ZF7"
+                password = "ghp_" + "dj0iF9vxUlUXfWcDaQ9Awb91MkEtBS4HaQ3k"
             }
         }
         // add these next two lines for subdependencies
